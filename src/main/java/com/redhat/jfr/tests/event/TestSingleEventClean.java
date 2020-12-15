@@ -26,8 +26,12 @@ import com.redhat.jfr.events.StringEvent;
 public class TestSingleEventClean {
 
     public static void main(String[] args) throws Exception {
+        long s0 = System.currentTimeMillis();
         StringEvent event = new StringEvent();
         event.message = "Event has been generated!";
         event.commit();
+
+        long d0 = System.currentTimeMillis() - s0;
+        System.out.println("elapsed:" + d0);
     }
 }
