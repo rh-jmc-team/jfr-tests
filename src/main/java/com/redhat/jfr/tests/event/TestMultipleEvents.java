@@ -1,5 +1,6 @@
 package com.redhat.jfr.tests.event;
 
+import com.redhat.jfr.events.ClassEvent;
 import com.redhat.jfr.events.StringEvent;
 import com.redhat.jfr.utils.JFR;
 import com.redhat.jfr.utils.LocalJFR;
@@ -13,13 +14,17 @@ public class TestMultipleEvents {
         JFR jfr = new LocalJFR();
         long id = jfr.startRecording("TestMultipleEvents");
 
-        int count = 1024 * 1024;
+        int count = 512 * 1024;
 
 
         for (int i = 0; i < count; i++) {
-            StringEvent event = new StringEvent();
-            event.message = "Event has been generated!";
-            event.commit();
+            StringEvent stringEvent = new StringEvent();
+            stringEvent.message = "Event has been generated!";
+            stringEvent.commit();
+
+            ClassEvent classEvent = new ClassEvent();
+            classEvent.klass = TestMultipleEvents.class;
+            classEvent.commit();
         }
 
         File recording = jfr.endRecording(id);
