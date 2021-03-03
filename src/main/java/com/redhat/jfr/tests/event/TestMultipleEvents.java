@@ -12,25 +12,24 @@ public class TestMultipleEvents {
     public static void main(String[] args) throws Exception {
         long s0 = System.currentTimeMillis();
         JFR jfr = new LocalJFR();
-        long id = jfr.startRecording("TestMultipleEvents");
+        for (int j = 0; j < 64; j++) {
+            long id = jfr.startRecording("TestMultipleEvents-" + j );
+            int count = 512 * 1024;
+            for (int i = 0; i < count; i++) {
+                StringEvent stringEvent = new StringEvent();
+                stringEvent.message = "Event has been generated!";
+                stringEvent.commit();
 
-        int count = 512 * 1024;
+                ClassEvent classEvent = new ClassEvent();
+                classEvent.klass = TestMultipleEvents.class;
+                classEvent.commit();
+            }
 
+            File recording = jfr.endRecording(id);
 
-        for (int i = 0; i < count; i++) {
-            StringEvent stringEvent = new StringEvent();
-            stringEvent.message = "Event has been generated!";
-            stringEvent.commit();
-
-            ClassEvent classEvent = new ClassEvent();
-            classEvent.klass = TestMultipleEvents.class;
-            classEvent.commit();
+            long d0 = System.currentTimeMillis() - s0;
+            System.out.println("elapsed:" + d0);
+            System.err.println("jfr recording: " + recording);
         }
-
-        File recording = jfr.endRecording(id);
-
-        long d0 = System.currentTimeMillis() - s0;
-        System.out.println("elapsed:" + d0);
-        System.err.println("jfr recording: " + recording);
     }
 }
