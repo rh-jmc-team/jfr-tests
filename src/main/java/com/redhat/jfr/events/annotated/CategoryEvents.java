@@ -19,20 +19,24 @@
  * along with the suite.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.redhat.jfr.events;
+package com.redhat.jfr.events.annotated;
 
-import jdk.jfr.Description;
 import jdk.jfr.Event;
-import jdk.jfr.Label;
-import jdk.jfr.Timestamp;
+import jdk.jfr.Category;
 
-@Label("Timestamp Event")
-@Description("A general event with just a message and a timestamp as payload")
-public class TimestampedEvent extends Event {
+public final class CategoryEvents {
+    private CategoryEvents() {
+    }
 
-    @Label("Message")
-    public String message;
+    @Category("Alpha")
+    public static class AlphaEvent extends Event {
+    }
 
-    @Timestamp
-    public long timestamp;
+    @Category("Beta")
+    public static class BetaEvent extends Event {
+    }
+
+    @Category({"Alpha", "Beta"})
+    public static class AlphaBetaEvent extends Event {
+    }
 }
