@@ -21,6 +21,20 @@
 
 package com.redhat.jfr.tests.event;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import jdk.jfr.Event;
+import jdk.jfr.EventFactory;
+import jdk.jfr.Name;
+import jdk.jfr.Label;
+import jdk.jfr.Description;
+import jdk.jfr.EventFactory;
+import jdk.jfr.Unsigned;
+import jdk.jfr.ValueDescriptor;
+import jdk.jfr.AnnotationElement;
+
 import com.redhat.jfr.events.StringEvent;
 import com.redhat.jfr.events.DataTypesEvent;
 import com.redhat.jfr.events.annotated.EnabledEvent;
@@ -93,7 +107,7 @@ public class TestDiverseEvents {
         Thread.sleep(100);
         betaEvent2.commit();
 
-        //DataTypesEvent
+        // DataTypesEvent
         DataTypesEvent dataTypesEvent = new DataTypesEvent();
         dataTypesEvent.classValue1 = Math.class;
         dataTypesEvent.threadValue1 = Thread.currentThread();
@@ -118,6 +132,23 @@ public class TestDiverseEvents {
         dataTypesEvent.timestampValue = System.currentTimeMillis();
         dataTypesEvent.unsignedValue = -5;
         dataTypesEvent.commit();
+
+        // Dynamic event
+        // Can be found by jfr print --events DynamicEvent1
+        List<AnnotationElement> eventAnnotations = new ArrayList<>();
+        eventAnnotations.add(new AnnotationElement(Label.class, "Dynamic Event"));
+        eventAnnotations.add(new AnnotationElement(Description.class, "This is a dynamically created event"));
+        List<AnnotationElement> fooFieldAnnotations = new ArrayList<>();
+        fooFieldAnnotations.add(new AnnotationElement(Label.class, "Foo"));
+        fooFieldAnnotations.add(new AnnotationElement(Description.class, "This is a dynamically created field"));
+        fooFieldAnnotations.add(new AnnotationElement(Unsigned.class));
+        List<ValueDescriptor> eventFields =
+            Collections.singletonList(new ValueDescriptor(int.class, "foo", fooFieldAnnotations));
+        EventFactory ef = EventFactory.create(eventAnnotations, eventFields);
+        Event dynamicEvent = ef.newEvent();
+        dynamicEvent.set(0, 123);
+        dynamicEvent.commit();
+
 
         long d0 = System.currentTimeMillis() - s0;
         System.out.println("elapsed:" + d0);
