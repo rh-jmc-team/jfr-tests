@@ -19,23 +19,9 @@
  * along with the suite.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.redhat.jfr.events.annotated;
+package com.redhat.jfr.events;
 
-import jdk.jfr.Event;
-import jdk.jfr.Label;
-import jdk.jfr.Description;
+import com.redhat.jfr.events.annotated.CustomAnnotationsEvent;
 
-import com.redhat.jfr.annotations.FooAnnotation;
-import com.redhat.jfr.annotations.BarAnnotation;
-
-@Label("Custom Annotations Event")
-@Description("This event tests custom annotations")
-@FooAnnotation(100)
-public class CustomAnnotationsEvent extends Event {
-    @BarAnnotation
-    @Description("Bar annotated field")
-    public String barAnnotatedField;
-
-    @Description("This field has a private access modifier")
-    private int privateField;
+public class InheretanceEvent extends CustomAnnotationsEvent {
 }

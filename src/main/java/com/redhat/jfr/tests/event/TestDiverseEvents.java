@@ -36,15 +36,16 @@ import jdk.jfr.ValueDescriptor;
 import jdk.jfr.AnnotationElement;
 
 import com.redhat.jfr.events.StringEvent;
+import com.redhat.jfr.events.InheretanceEvent;
 import com.redhat.jfr.events.DataTypesEvent;
 import com.redhat.jfr.events.annotated.EnabledEvent;
 import com.redhat.jfr.events.annotated.RegisteredEvent;
 import com.redhat.jfr.events.annotated.UnregisteredEvent;
+import com.redhat.jfr.events.annotated.CustomAnnotationsEvent;
 import com.redhat.jfr.utils.JFR;
 import com.redhat.jfr.utils.LocalJFR;
 import com.redhat.jfr.utils.Stressor;
 
-import com.redhat.jfr.events.annotated.CustomAnnotationsEvent;
 
 import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaEvent;
 import static com.redhat.jfr.events.annotated.CategoryEvents.BetaEvent;
@@ -155,6 +156,11 @@ public class TestDiverseEvents {
         CustomAnnotationsEvent cae = new CustomAnnotationsEvent();
         cae.barAnnotatedField = "BARRR";
         cae.commit();
+
+        // InheretanceEvent
+        InheretanceEvent ie = new InheretanceEvent();
+        ie.barAnnotatedField = "BAZZZ";
+        ie.commit();
 
         long d0 = System.currentTimeMillis() - s0;
         System.out.println("elapsed:" + d0);
