@@ -44,6 +44,8 @@ import com.redhat.jfr.utils.JFR;
 import com.redhat.jfr.utils.LocalJFR;
 import com.redhat.jfr.utils.Stressor;
 
+import com.redhat.jfr.events.annotated.CustomAnnotationsEvent;
+
 import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaEvent;
 import static com.redhat.jfr.events.annotated.CategoryEvents.BetaEvent;
 import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaBetaEvent;
@@ -149,6 +151,10 @@ public class TestDiverseEvents {
         dynamicEvent.set(0, 123);
         dynamicEvent.commit();
 
+        // CustomAnnotationsEvent
+        CustomAnnotationsEvent cae = new CustomAnnotationsEvent();
+        cae.barAnnotatedField = "BARRR";
+        cae.commit();
 
         long d0 = System.currentTimeMillis() - s0;
         System.out.println("elapsed:" + d0);
