@@ -31,9 +31,11 @@ import jdk.jfr.Name;
 import jdk.jfr.Label;
 import jdk.jfr.Description;
 import jdk.jfr.EventFactory;
+import jdk.jfr.Period;
 import jdk.jfr.Unsigned;
 import jdk.jfr.ValueDescriptor;
 import jdk.jfr.AnnotationElement;
+import jdk.jfr.FlightRecorder;
 
 import com.redhat.jfr.events.StringEvent;
 import com.redhat.jfr.events.InheretanceEvent;
@@ -42,10 +44,11 @@ import com.redhat.jfr.events.annotated.EnabledEvent;
 import com.redhat.jfr.events.annotated.RegisteredEvent;
 import com.redhat.jfr.events.annotated.UnregisteredEvent;
 import com.redhat.jfr.events.annotated.CustomAnnotationsEvent;
+import com.redhat.jfr.events.annotated.ThresholdEvent;
+import com.redhat.jfr.events.annotated.PeriodicEvent;
 import com.redhat.jfr.utils.JFR;
 import com.redhat.jfr.utils.LocalJFR;
 import com.redhat.jfr.utils.Stressor;
-
 
 import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaEvent;
 import static com.redhat.jfr.events.annotated.CategoryEvents.BetaEvent;
@@ -54,8 +57,23 @@ import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaBetaEvent;
 public class TestDiverseEvents {
     private static final int COUNT = 1024 * 1024;
 
+    @Name("com.oracle.StartedThreadCount")
+    @Label("Total number of started threads")
+    @Period("50 ms")
+    static class StartedThreadCount extends Event {
+        long totalStartedThreadCount;
+    }
+
     public static void main(String[] args) throws Exception {
         long s0 = System.currentTimeMillis();
+
+        // PeriodicEvent @Period("beginChunk")
+        Runnable hook = () -> {
+            PeriodicEvent event = new PeriodicEvent();
+            event.time = System.currentTimeMillis();
+            event.commit();
+        };
+        FlightRecorder.addPeriodicEvent(PeriodicEvent.class, hook);
 
         // TestMultipleEvents
         for (int i = 0; i < COUNT; i++) {
@@ -76,16 +94,19 @@ public class TestDiverseEvents {
         Thread.UncaughtExceptionHandler eh = (t, e) -> e.printStackTrace();
         Stressor.execute(threadCount, eh, r);
 
-        // EnabledEvent (@Enabled(false))
+        // EnabledEvent @Enabled(false)
         new EnabledEvent().commit();
 
-        // RegisteredEvent (@Enabled(false))
+        // RegisteredEvent @Enabled(false)
         new RegisteredEvent().commit();
 
-        // UnregisteredEvent (@Enabled(false))
+        // UnregisteredEvent @Enabled(false)
         new UnregisteredEvent().commit();
 
         // CategoryEvents
+        //   * AlphaEvent     @Category("Alpha")
+        //   * BetaEvent      @Category("Beta")
+        //   * AlphaBetaEvent @Category({"Alpha", "Beta"})
         // -----------------------------------------------------------
         //   |            alphaEvent                 |
         // -----------------------------------------------------------
@@ -161,6 +182,16 @@ public class TestDiverseEvents {
         InheretanceEvent ie = new InheretanceEvent();
         ie.barAnnotatedField = "BAZZZ";
         ie.commit();
+
+        // ThresholdEvent
+        ThresholdEvent meetsThreshold = new ThresholdEvent();
+        ThresholdEvent doesNotMeetThreshold = new ThresholdEvent();
+        meetsThreshold.begin();
+        doesNotMeetThreshold.begin();
+        Thread.sleep(30);
+        doesNotMeetThreshold.commit();
+        Thread.sleep(30);
+        meetsThreshold.commit();
 
         long d0 = System.currentTimeMillis() - s0;
         System.out.println("elapsed:" + d0);
