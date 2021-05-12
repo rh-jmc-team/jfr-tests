@@ -21,8 +21,11 @@
 
 package com.redhat.jfr.events;
 
+import jdk.jfr.StackTrace;
+
 import com.redhat.jfr.events.annotated.CustomAnnotationsEvent;
 
+@StackTrace(true)
 public class InheretanceEvent extends CustomAnnotationsEvent {
     transient String transientField;
 }
