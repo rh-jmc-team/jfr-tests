@@ -19,10 +19,15 @@
  * along with the suite.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.redhat.jfr.events;
+package com.redhat.jfr.events.annotated;
 
-import com.redhat.jfr.events.annotated.CustomAnnotationsEvent;
+import jdk.jfr.Event;
+import jdk.jfr.Label;
+import jdk.jfr.Description;
+import jdk.jfr.Threshold;
 
-public class InheretanceEvent extends CustomAnnotationsEvent {
-    transient String transientField;
+@Label("Theshold Event")
+@Description("This event has a threshold of 50ms")
+@Threshold("50 ms")
+public class ThresholdEvent extends Event {
 }
