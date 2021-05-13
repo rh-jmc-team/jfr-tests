@@ -54,7 +54,7 @@ import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaEvent;
 import static com.redhat.jfr.events.annotated.CategoryEvents.BetaEvent;
 import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaBetaEvent;
 
-public class TestDiverseEvents {
+public class TestDiverseEventsClean {
     private static final int COUNT = 1024 * 1024;
 
     @Name("com.oracle.StartedThreadCount")
