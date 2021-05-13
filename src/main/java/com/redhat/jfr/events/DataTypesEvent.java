@@ -21,7 +21,16 @@
 
 package com.redhat.jfr.events;
 
-import jdk.jfr.*;
+import jdk.jfr.Label;
+import jdk.jfr.Event;
+import jdk.jfr.BooleanFlag;
+import jdk.jfr.DataAmount;
+import jdk.jfr.Frequency;
+import jdk.jfr.MemoryAddress;
+import jdk.jfr.Percentage;
+import jdk.jfr.Timespan;
+import jdk.jfr.Timestamp;
+import jdk.jfr.Unsigned;
 
 public class DataTypesEvent extends Event {
     @Label("Class Value 1")
