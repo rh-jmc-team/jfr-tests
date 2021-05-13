@@ -97,9 +97,9 @@ public class TestDiverseEventsClean {
         new UnregisteredEvent().commit();
 
         // CategoryEvents
-        //   * AlphaEvent     @Category("Alpha")
-        //   * BetaEvent      @Category("Beta")
-        //   * AlphaBetaEvent @Category({"Alpha", "Beta"})
+        //   * AlphaEvent     @Category("Alpha")           @Name("AlphaEvent")
+        //   * BetaEvent      @Category("Beta")            @Name("BetaEvent")
+        //   * AlphaBetaEvent @Category({"Alpha", "Beta"}) @Name("AlphaBetaEvent")
         // -----------------------------------------------------------
         //   |            alphaEvent                 |
         // -----------------------------------------------------------
