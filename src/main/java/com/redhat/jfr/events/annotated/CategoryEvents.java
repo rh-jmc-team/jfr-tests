@@ -21,6 +21,7 @@
 
 package com.redhat.jfr.events.annotated;
 
+import jdk.jfr.Name;
 import jdk.jfr.Event;
 import jdk.jfr.Category;
 
@@ -28,14 +29,17 @@ public final class CategoryEvents {
     private CategoryEvents() {
     }
 
+    @Name("AlphaEvent")
     @Category("Alpha")
     public static class AlphaEvent extends Event {
     }
 
+    @Name("BetaEvent")
     @Category("Beta")
     public static class BetaEvent extends Event {
     }
 
+    @Name("AlphaBetaEvent")
     @Category({"Alpha", "Beta"})
     public static class AlphaBetaEvent extends Event {
     }
