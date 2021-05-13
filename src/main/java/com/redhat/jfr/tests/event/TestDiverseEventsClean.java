@@ -57,13 +57,6 @@ import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaBetaEvent;
 public class TestDiverseEventsClean {
     private static final int COUNT = 1024 * 1024;
 
-    @Name("com.oracle.StartedThreadCount")
-    @Label("Total number of started threads")
-    @Period("50 ms")
-    static class StartedThreadCount extends Event {
-        long totalStartedThreadCount;
-    }
-
     public static void main(String[] args) throws Exception {
         long s0 = System.currentTimeMillis();
 
