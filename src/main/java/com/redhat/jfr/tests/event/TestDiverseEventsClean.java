@@ -54,137 +54,23 @@ import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaEvent;
 import static com.redhat.jfr.events.annotated.CategoryEvents.BetaEvent;
 import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaBetaEvent;
 
+// TODO: Add summary from GH in comment
 public class TestDiverseEventsClean {
     private static final int COUNT = 1024 * 1024;
 
     public static void main(String[] args) throws Exception {
         long s0 = System.currentTimeMillis();
 
-        // PeriodicEvent @Period("beginChunk")
-        Runnable hook = () -> {
-            PeriodicEvent event = new PeriodicEvent();
-            event.time = System.currentTimeMillis();
-            event.commit();
-        };
-        FlightRecorder.addPeriodicEvent(PeriodicEvent.class, hook);
-
-        // TestMultipleEvents
-        for (int i = 0; i < COUNT; i++) {
-            StringEvent event = new StringEvent();
-            event.message = "StringEvent has been generated as part of TestMultipleEvents.";
-            event.commit();
-        }
-
-        // TestConcurrentEvents
-        int threadCount = 8;
-        Runnable r = () -> {
-            for (int i = 0; i < COUNT; i++) {
-                StringEvent event = new StringEvent();
-                event.message = "StringEvent has been generated as part of TestConcurrentEvents.";
-                event.commit();
-            }
-        };
-        Thread.UncaughtExceptionHandler eh = (t, e) -> e.printStackTrace();
-        Stressor.execute(threadCount, eh, r);
-
-        // EnabledEvent @Enabled(false)
-        new EnabledEvent().commit();
-
-        // RegisteredEvent @Enabled(false)
-        new RegisteredEvent().commit();
-
-        // UnregisteredEvent @Enabled(false)
-        new UnregisteredEvent().commit();
-
-        // CategoryEvents
-        //   * AlphaEvent     @Category("Alpha")           @Name("AlphaEvent")
-        //   * BetaEvent      @Category("Beta")            @Name("BetaEvent")
-        //   * AlphaBetaEvent @Category({"Alpha", "Beta"}) @Name("AlphaBetaEvent")
-        // -----------------------------------------------------------
-        //   |            alphaEvent                 |
-        // -----------------------------------------------------------
-        //   | betaEvent1 |          |          betaEvent2         |
-        // -----------------------------------------------------------
-        //   |     alphaBetaEvent    |
-        // -----------------------------------------------------------
-        AlphaEvent alphaEvent = new AlphaEvent();
-        BetaEvent betaEvent1 = new BetaEvent();
-        BetaEvent betaEvent2 = new BetaEvent();
-        AlphaBetaEvent alphaBetaEvent = new AlphaBetaEvent();
-        alphaEvent.begin();
-        betaEvent1.begin();
-        alphaBetaEvent.begin();
-        Thread.sleep(100);
-        betaEvent1.commit();
-        Thread.sleep(100);
-        betaEvent2.begin();
-        alphaBetaEvent.commit();
-        Thread.sleep(100);
-        alphaEvent.commit();
-        Thread.sleep(100);
-        betaEvent2.commit();
-
-        // DataTypesEvent
-        DataTypesEvent dataTypesEvent = new DataTypesEvent();
-        dataTypesEvent.classValue1 = Math.class;
-        dataTypesEvent.threadValue1 = Thread.currentThread();
-        dataTypesEvent.stringValue1 = "Hello, World!";
-        dataTypesEvent.classValue2 = null;
-        dataTypesEvent.threadValue2 = null;
-        dataTypesEvent.stringValue2 = null;
-        dataTypesEvent.byteValue = (byte) 1;
-        dataTypesEvent.shortValue = (short) 0111;
-        dataTypesEvent.intValue = 0x111;
-        dataTypesEvent.longValue = Long.MAX_VALUE;
-        dataTypesEvent.floatValue = Float.MIN_VALUE;
-        dataTypesEvent.doubleValue = Math.PI;
-        dataTypesEvent.characterValue = 'C';
-        dataTypesEvent.booleanValue = true;
-        dataTypesEvent.booleanFlagValue = false;
-        dataTypesEvent.dataAmountValue = -1;
-        dataTypesEvent.frequencyValue = 1;
-        dataTypesEvent.memoryAddressValue = 1;
-        dataTypesEvent.percentageValue = 101;
-        dataTypesEvent.timespanValue = 1;
-        dataTypesEvent.timestampValue = System.currentTimeMillis();
-        dataTypesEvent.unsignedValue = -5;
-        dataTypesEvent.commit();
-
-        // Dynamic event
-        // Can be found by jfr print --events DynamicEvent1
-        List<AnnotationElement> eventAnnotations = new ArrayList<>();
-        eventAnnotations.add(new AnnotationElement(Label.class, "Dynamic Event"));
-        eventAnnotations.add(new AnnotationElement(Description.class, "This is a dynamically created event"));
-        List<AnnotationElement> fooFieldAnnotations = new ArrayList<>();
-        fooFieldAnnotations.add(new AnnotationElement(Label.class, "Foo"));
-        fooFieldAnnotations.add(new AnnotationElement(Description.class, "This is a dynamically created field"));
-        fooFieldAnnotations.add(new AnnotationElement(Unsigned.class));
-        List<ValueDescriptor> eventFields =
-            Collections.singletonList(new ValueDescriptor(int.class, "foo", fooFieldAnnotations));
-        EventFactory ef = EventFactory.create(eventAnnotations, eventFields);
-        Event dynamicEvent = ef.newEvent();
-        dynamicEvent.set(0, 123);
-        dynamicEvent.commit();
-
-        // CustomAnnotationsEvent
-        CustomAnnotationsEvent cae = new CustomAnnotationsEvent();
-        cae.barAnnotatedField = "BARRR";
-        cae.commit();
-
-        // InheretanceEvent
-        InheretanceEvent ie = new InheretanceEvent();
-        ie.barAnnotatedField = "BAZZZ";
-        ie.commit();
-
-        // ThresholdEvent
-        ThresholdEvent meetsThreshold = new ThresholdEvent();
-        ThresholdEvent doesNotMeetThreshold = new ThresholdEvent();
-        meetsThreshold.begin();
-        doesNotMeetThreshold.begin();
-        Thread.sleep(30);
-        doesNotMeetThreshold.commit();
-        Thread.sleep(30);
-        meetsThreshold.commit();
+        TestPeriodicEventClean.main(null);
+        TestMultipleEventsClean.main(null);
+        TestConcurrentEventsClean.main(null);
+        TestEnabledAndRegisteredEventsClean.main(null);
+        TestCategoryEventsClean.main(null);
+        TestDataTypesEventClean.main(null);
+        TestDynamicEventClean.main(null);
+        TestCustomAnnotationsEventClean.main(null);
+        TestInheretanceEventClean.main(null);
+        TestThresholdEventClean.main(null);
 
         long d0 = System.currentTimeMillis() - s0;
         System.out.println("elapsed:" + d0);
