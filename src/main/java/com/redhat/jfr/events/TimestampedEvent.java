@@ -26,7 +26,7 @@ import jdk.jfr.Event;
 import jdk.jfr.Label;
 import jdk.jfr.Timestamp;
 
-@Label("Timestamp Event")
+@Label("Timestamped Event")
 @Description("A general event with just a message and a timestamp as payload")
 public class TimestampedEvent extends Event {
 

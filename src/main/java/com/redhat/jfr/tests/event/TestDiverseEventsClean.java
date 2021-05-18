@@ -54,7 +54,31 @@ import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaEvent;
 import static com.redhat.jfr.events.annotated.CategoryEvents.BetaEvent;
 import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaBetaEvent;
 
-// TODO: Add summary from GH in comment
+
+// PeriodicEvent - Registers a periodic event that is emitted at the beginning of every chunk.
+//
+// TestMultipleEvents - Event emitting code from TestMultipleEvents.
+//
+// TestConcurrentEvents - Event emitting code from TestConcurrentEvents.
+//
+// EnabledEvent - Emits a disabled event.
+//
+// RegisteredEvent - Emits a registered, disabled event.
+//
+// UnregisteredEvent - Emits an unregistered, disabled event.
+//
+// CategoryEvents - Emits timed and overlapping events with categories.
+//
+// DataTypesEvent - Emits an event with all possible data types and data type annotations.
+//
+// DynamicEvent - Creates and emits a dynamic event (DynamicEvent1).
+//
+// CustomAnnotationsEvent - Emits an event with custom annotations. Also has a private field.
+//
+// InheretanceEvent - Emits an event that extends CustomAnnotationsEvent. Also has stack trace enabled and a transient field, just to test those without making seperate events.
+//
+// ThresholdEvent - Emits an event with a threshold: once without meeting the threshold, and once meeting it.
+
 public class TestDiverseEventsClean {
     private static final int COUNT = 1024 * 1024;
 
