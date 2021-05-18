@@ -27,7 +27,14 @@ public class TestMultipleEventsClean {
     private static final int COUNT = 1024 * 1024;
 
     public static void main(String args[]) {
-         for (int i = 0; i < COUNT; i++) {
+        long s0 = System.currentTimeMillis();
+        run();
+        long d0 = System.currentTimeMillis() - s0;
+        System.out.println("elapsed:" + d0);
+    }
+
+    public static void run() {
+        for (int i = 0; i < COUNT; i++) {
             StringEvent event = new StringEvent();
             event.message = "StringEvent has been generated as part of TestMultipleEventsClean.";
             event.commit();

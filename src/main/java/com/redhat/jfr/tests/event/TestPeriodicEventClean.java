@@ -27,6 +27,13 @@ import jdk.jfr.FlightRecorder;
 public class TestPeriodicEventClean {
 
     public static void main(String args[]) {
+        long s0 = System.currentTimeMillis();
+        run();
+        long d0 = System.currentTimeMillis() - s0;
+        System.out.println("elapsed:" + d0);
+    }
+
+    public static void run() {
         Runnable hook = () -> {
             PeriodicEvent event = new PeriodicEvent();
             event.time = System.currentTimeMillis();

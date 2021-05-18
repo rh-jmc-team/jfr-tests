@@ -38,6 +38,13 @@ public class TestCategoryEventsClean {
     //   |     alphaBetaEvent    |
     // -----------------------------------------------------------
     public static void main(String args[]) throws Exception {
+        long s0 = System.currentTimeMillis();
+        run();
+        long d0 = System.currentTimeMillis();
+        System.out.println("elapsed:" + d0);
+    }
+
+    public static void run() throws Exception {
         AlphaEvent alphaEvent = new AlphaEvent();
         BetaEvent betaEvent1 = new BetaEvent();
         BetaEvent betaEvent2 = new BetaEvent();

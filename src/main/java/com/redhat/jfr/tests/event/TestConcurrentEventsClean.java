@@ -28,6 +28,13 @@ public class TestConcurrentEventsClean {
     private static final int COUNT = 1024 * 1024;
 
     public static void main(String args[]) throws Exception {
+        long s0 = System.currentTimeMillis();
+        run();
+        long d0 = System.currentTimeMillis() - s0;
+        System.out.println("elapsed:" + d0);
+    }
+
+    public static void run() throws Exception {
         int threadCount = 8;
         Runnable r = () -> {
             for (int i = 0; i < COUNT; i++) {

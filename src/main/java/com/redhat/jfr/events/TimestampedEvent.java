@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, Red Hat, Inc.
+ * Copyright (c) 2020, Red Hat, Inc.
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -26,7 +26,7 @@ import jdk.jfr.Event;
 import jdk.jfr.Label;
 import jdk.jfr.Timestamp;
 
-@Label("Timestamped Event")
+@Label("Timestamp Event")
 @Description("A general event with just a message and a timestamp as payload")
 public class TimestampedEvent extends Event {
 
