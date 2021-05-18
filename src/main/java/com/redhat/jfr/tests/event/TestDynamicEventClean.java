@@ -33,10 +33,17 @@ import jdk.jfr.Unsigned;
 import jdk.jfr.ValueDescriptor;
 import jdk.jfr.AnnotationElement;
 
+// Can be found by jfr print --events DynamicEvent1
 public class TestDynamicEventClean {
 
-    // Can be found by jfr print --events DynamicEvent1
     public static void main(String args[]) {
+        long s0 = System.currentTimeMillis();
+        run();
+        long d0 = System.currentTimeMillis() - s0;
+        System.out.println("elapsed:" + d0);
+    }
+
+    public static void run() {
         List<AnnotationElement> eventAnnotations = new ArrayList<>();
         eventAnnotations.add(new AnnotationElement(Label.class, "Dynamic Event"));
         eventAnnotations.add(new AnnotationElement(Description.class, "This is a dynamically created event"));

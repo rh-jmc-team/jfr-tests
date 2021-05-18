@@ -71,7 +71,7 @@ import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaBetaEvent;
 //
 // DataTypesEvent - Emits an event with all possible data types and data type annotations.
 //
-// DynamicEvent - Creates and emits a dynamic event (DynamicEvent1).
+// DynamicEvent1 - Creates and emits a dynamic event.
 //
 // CustomAnnotationsEvent - Emits an event with custom annotations. Also has a private field.
 //
@@ -85,16 +85,16 @@ public class TestDiverseEventsClean {
     public static void main(String[] args) throws Exception {
         long s0 = System.currentTimeMillis();
 
-        TestPeriodicEventClean.main(null);
-        TestMultipleEventsClean.main(null);
-        TestConcurrentEventsClean.main(null);
-        TestEnabledAndRegisteredEventsClean.main(null);
-        TestCategoryEventsClean.main(null);
-        TestDataTypesEventClean.main(null);
-        TestDynamicEventClean.main(null);
-        TestCustomAnnotationsEventClean.main(null);
-        TestInheretanceEventClean.main(null);
-        TestThresholdEventClean.main(null);
+        TestPeriodicEventClean.run();
+        TestMultipleEventsClean.run();
+        TestConcurrentEventsClean.run();
+        TestEnabledAndRegisteredEventsClean.run();
+        TestCategoryEventsClean.run();
+        TestDataTypesEventClean.run();
+        TestDynamicEventClean.run();
+        TestCustomAnnotationsEventClean.run();
+        TestInheretanceEventClean.run();
+        TestThresholdEventClean.run();
 
         long d0 = System.currentTimeMillis() - s0;
         System.out.println("elapsed:" + d0);

@@ -26,6 +26,13 @@ import com.redhat.jfr.events.InheretanceEvent;
 public class TestInheretanceEventClean {
 
     public static void main(String args[]) {
+        long s0 = System.currentTimeMillis();
+        run();
+        long d0 = System.currentTimeMillis() - s0;
+        System.out.println("elapsed:" + d0);
+    }
+
+    public static void run() {
         InheretanceEvent ie = new InheretanceEvent();
         ie.barAnnotatedField = "BAZZZ";
         ie.commit();

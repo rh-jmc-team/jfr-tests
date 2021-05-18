@@ -26,6 +26,13 @@ import com.redhat.jfr.events.annotated.CustomAnnotationsEvent;
 public class TestCustomAnnotationsEventClean {
 
     public static void main(String args[]) {
+        long s0 = System.currentTimeMillis();
+        run();
+        long d0 = System.currentTimeMillis() - s0;
+        System.out.println("elapsed:" + d0);
+    }
+
+    public static void run() {
         CustomAnnotationsEvent cae = new CustomAnnotationsEvent();
         cae.barAnnotatedField = "BARRR";
         cae.commit();

@@ -26,6 +26,13 @@ import com.redhat.jfr.events.annotated.ThresholdEvent;
 public class TestThresholdEventClean {
 
     public static void main(String args[]) throws Exception {
+        long s0 = System.currentTimeMillis();
+        run();
+        long d0 = System.currentTimeMillis() - s0;
+        System.out.println("elapsed:" + d0);
+    }
+
+    public static void run() throws Exception {
         ThresholdEvent meetsThreshold = new ThresholdEvent();
         ThresholdEvent doesNotMeetThreshold = new ThresholdEvent();
         meetsThreshold.begin();
