@@ -38,7 +38,7 @@ import jdk.jfr.AnnotationElement;
 import jdk.jfr.FlightRecorder;
 
 import com.redhat.jfr.events.StringEvent;
-import com.redhat.jfr.events.InheretanceEvent;
+import com.redhat.jfr.events.InheritanceEvent;
 import com.redhat.jfr.events.DataTypesEvent;
 import com.redhat.jfr.events.annotated.EnabledEvent;
 import com.redhat.jfr.events.annotated.RegisteredEvent;
@@ -75,7 +75,7 @@ import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaBetaEvent;
 //
 // CustomAnnotationsEvent - Emits an event with custom annotations. Also has a private field.
 //
-// InheretanceEvent - Emits an event that extends CustomAnnotationsEvent. Also has stack trace enabled and a transient field, just to test those without making seperate events.
+// InheritanceEvent - Emits an event that extends CustomAnnotationsEvent. Also has stack trace enabled and a transient field, just to test those without making seperate events.
 //
 // ThresholdEvent - Emits an event with a threshold: once without meeting the threshold, and once meeting it.
 
@@ -93,7 +93,7 @@ public class TestDiverseEventsClean {
         TestDataTypesEventClean.run();
         TestDynamicEventClean.run();
         TestCustomAnnotationsEventClean.run();
-        TestInheretanceEventClean.run();
+        TestInheritanceEventClean.run();
         TestThresholdEventClean.run();
 
         long d0 = System.currentTimeMillis() - s0;

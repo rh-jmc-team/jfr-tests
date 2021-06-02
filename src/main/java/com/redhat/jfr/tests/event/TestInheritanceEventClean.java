@@ -21,9 +21,9 @@
 
 package com.redhat.jfr.tests.event;
 
-import com.redhat.jfr.events.InheretanceEvent;
+import com.redhat.jfr.events.InheritanceEvent;
 
-public class TestInheretanceEventClean {
+public class TestInheritanceEventClean {
 
     public static void main(String args[]) {
         long s0 = System.currentTimeMillis();
@@ -33,7 +33,7 @@ public class TestInheretanceEventClean {
     }
 
     public static void run() {
-        InheretanceEvent ie = new InheretanceEvent();
+        InheritanceEvent ie = new InheritanceEvent();
         ie.barAnnotatedField = "BAZZZ";
         ie.commit();
     }
