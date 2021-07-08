@@ -71,8 +71,6 @@ import static com.redhat.jfr.events.annotated.CategoryEvents.AlphaBetaEvent;
 //
 // DataTypesEvent - Emits an event with all possible data types and data type annotations.
 //
-// DynamicEvent1 - Creates and emits a dynamic event.
-//
 // CustomAnnotationsEvent - Emits an event with custom annotations. Also has a private field.
 //
 // InheritanceEvent - Emits an event that extends CustomAnnotationsEvent. Also has stack trace enabled and a transient field, just to test those without making seperate events.
@@ -91,7 +89,6 @@ public class TestDiverseEventsClean {
         TestEnabledAndRegisteredEventsClean.run();
         TestCategoryEventsClean.run();
         TestDataTypesEventClean.run();
-        TestDynamicEventClean.run();
         TestCustomAnnotationsEventClean.run();
         TestInheritanceEventClean.run();
         TestThresholdEventClean.run();
