@@ -22,6 +22,8 @@
 package com.redhat.jfr.tests.event;
 
 import com.redhat.jfr.events.StringEvent;
+import com.redhat.jfr.events.IntegerEvent;
+import com.redhat.jfr.events.ClassEvent;
 import com.redhat.jfr.utils.Stressor;
 
 public class TestConcurrentEventsClean {
@@ -38,9 +40,17 @@ public class TestConcurrentEventsClean {
         int threadCount = 8;
         Runnable r = () -> {
             for (int i = 0; i < COUNT; i++) {
-                StringEvent event = new StringEvent();
-                event.message = "StringEvent has been generated as part of TestConcurrentEvents.";
-                event.commit();
+                StringEvent stringEvent = new StringEvent();
+                stringEvent.message = "StringEvent has been generated as part of TestConcurrentEvents.";
+                stringEvent.commit();
+
+                IntegerEvent integerEvent = new IntegerEvent();
+                integerEvent.number = Integer.MAX_VALUE;
+                integerEvent.commit();
+
+                ClassEvent classEvent = new ClassEvent();
+                classEvent.clazz = Math.class;
+                classEvent.commit();
             }
         };
         Thread.UncaughtExceptionHandler eh = (t, e) -> e.printStackTrace();

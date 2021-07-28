@@ -1,6 +1,8 @@
 package com.redhat.jfr.tests.event;
 
 import com.redhat.jfr.events.StringEvent;
+import com.redhat.jfr.events.IntegerEvent;
+import com.redhat.jfr.events.ClassEvent;
 import com.redhat.jfr.utils.JFR;
 import com.redhat.jfr.utils.LocalJFR;
 import com.redhat.jfr.utils.Stressor;
@@ -18,9 +20,17 @@ public class TestConcurrentEvents {
         Runnable r = () -> {
             int count = 1024 * 1024;
             for (int i = 0; i < count; i++) {
-                StringEvent event = new StringEvent();
-                event.message = "Event has been generated!";
-                event.commit();
+                StringEvent stringEvent = new StringEvent();
+                stringEvent.message = "Event has been generated!";
+                stringEvent.commit();
+
+                IntegerEvent integerEvent = new IntegerEvent();
+                integerEvent.number = Integer.MAX_VALUE;
+                integerEvent.commit();
+
+                ClassEvent classEvent = new ClassEvent();
+                classEvent.clazz = Math.class;
+                classEvent.commit();
             }
         };
         Thread.UncaughtExceptionHandler eh = (t, e) -> e.printStackTrace();
