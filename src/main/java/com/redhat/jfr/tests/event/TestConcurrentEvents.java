@@ -14,8 +14,7 @@ public class TestConcurrentEvents {
     public static void main(String[] args) throws Exception {
         long s0 = System.currentTimeMillis();
         JFR jfr = new LocalJFR();
-        // threadCount set to # of cores of ibm-x3650m4-01-vm-05.ibm2.lab.eng.bos.redhat.com
-        int threadCount = 2;
+        int threadCount = 8;
         long id = jfr.startRecording("TestConcurrentEvents");
 
         Runnable r = () -> {
