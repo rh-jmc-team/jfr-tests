@@ -7,13 +7,13 @@ import com.redhat.jfr.utils.Stressor;
 
 import java.io.File;
 
-public class TestConcurrentEventsInteger {
+public class TestConcurrentIntegerEvents {
 
     public static void main(String[] args) throws Exception {
         long s0 = System.currentTimeMillis();
         JFR jfr = new LocalJFR();
         int threadCount = 8;
-        long id = jfr.startRecording("TestConcurrentEventsInteger");
+        long id = jfr.startRecording("TestConcurrentIntegerEvents");
 
         Runnable r = () -> {
             int count = 1024 * 1024;

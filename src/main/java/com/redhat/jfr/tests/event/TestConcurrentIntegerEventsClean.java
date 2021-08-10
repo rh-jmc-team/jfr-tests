@@ -24,7 +24,7 @@ package com.redhat.jfr.tests.event;
 import com.redhat.jfr.events.IntegerEvent;
 import com.redhat.jfr.utils.Stressor;
 
-public class TestConcurrentEventsIntegerClean {
+public class TestConcurrentIntegerEventsClean {
     private static final int COUNT = 1024 * 1024;
 
     public static void main(String args[]) throws Exception {
