@@ -28,7 +28,7 @@ import jdk.jfr.StackTrace;
 
 @Label("Integer Event")
 @Description("An event with an integer payload")
-@StackTrace(false)
+@StackTrace(true)
 public class IntegerEvent extends Event {
 
     @Label("Number")
