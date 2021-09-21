@@ -40,7 +40,7 @@ public class TestCategoryEventsClean {
     public static void main(String args[]) throws Exception {
         long s0 = System.currentTimeMillis();
         run();
-        long d0 = System.currentTimeMillis();
+        long d0 = System.currentTimeMillis() - s0;
         System.out.println("elapsed:" + d0);
     }
 
