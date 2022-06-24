@@ -20,17 +20,13 @@
  */
 
 package com.redhat.jfr.tests.event;
-
 /*
-* This program should test whether JavaMonitorWait events are emitted correctly.
-* Specifically, it is basically a smoke test to ensure the notifier IDs are correct.
-* The result of this test should be producer-consumer behavior.
-* Producer should wait until space is available and notify once it has produced.
-* Consumer should wait until product is available and notify when there is space.
-* Should observe alternation with a buffer size of 1.
-*/
-
-public class TestJavaMonitorWaitEvents {
+ * This program should test whether JavaMonitorWait events are emitted correctly.
+ * Specifically, it tests whether the queue used in the substrateVM implementation is being maintained correctly
+ * (number of elements in queue is less than or equal to number of waiters at any point in time)
+ * You should observe the exact same behavior as in TestJavaMonitorWaitEventsNotifyAll.
+ */
+public class TestJavaMonitorWaitEventsQueueTest {
     private static final int MILLIS = 50;
     static Helper helper = new Helper();
 
@@ -58,36 +54,44 @@ public class TestJavaMonitorWaitEvents {
                 throw new RuntimeException(e);
             }
         };
-        Thread tc = new Thread(consumer);
-        Thread tp = new Thread(producer);
-        tp.start();
-        tc.start();
-        tp.join();
-        tc.join();
+        Thread tc1 = new Thread(consumer);
+        Thread tp1 = new Thread(producer);
+        Thread tp2 = new Thread(producer);
+
+
+        tp1.start();
+        tp2.start();
+        //give the producers a headstart so they can start waiting
+        Thread.sleep(100);
+        tc1.start();
+
+        tp1.join();
+        tp2.join();
+        tc1.join();
     }
 
     static class Helper {
-        private int count = 0;
-        private final int bufferSize = 1;
+        private int count = 2;
+        private final int bufferSize = 2;
 
         public synchronized void produce() throws InterruptedException {
-            for (int i = 0; i< 10; i++) {
-                while (count >= bufferSize) {
-                    wait();
-                }
-                Thread.sleep(MILLIS);
+            for (int i = 0; i < 10; i++) {
+                wait();
+                System.out.println("produce");
                 count++;
-                notify();
             }
         }
 
         public synchronized void consume() throws InterruptedException {
-            for (int i = 0; i< 10; i++) {
-                while (count == 0) {
-                    wait();
+            for (int i = 0; i < 10; i++) {
+                while (count < bufferSize) {
+                    wait(MILLIS);
                 }
-                Thread.sleep(MILLIS);
-                count--;
+                System.out.println("consume");
+                count -= 2;
+                notifyAll(); //should wake up both producers
+                notifyAll(); //should do nothing
+                notify();
                 notify();
             }
         }

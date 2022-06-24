@@ -20,7 +20,12 @@
  */
 
 package com.redhat.jfr.tests.event;
-
+/*
+ * This program should test whether JavaMonitorWait events are emitted correctly.
+ * Specifically, it tests whether notifyAll() results in emitting the correct events for all waiters.
+ * You should observe that one notifier thread TID wakes up 2 waiters when checked in JMC periodically.
+ * With a period defined by MILLIS.
+ */
 public class TestJavaMonitorWaitEventsNotifyAll {
     private static final int MILLIS = 50;
     static Helper helper = new Helper();
