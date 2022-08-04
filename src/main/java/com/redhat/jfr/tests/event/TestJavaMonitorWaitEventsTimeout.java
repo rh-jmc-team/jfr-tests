@@ -76,6 +76,7 @@ public class TestJavaMonitorWaitEventsTimeout {
 
 
         timeoutThread.start();
+        Thread.sleep(10);
         unheardNotifierThread.start();
 
         timeoutThread.join();
@@ -86,6 +87,7 @@ public class TestJavaMonitorWaitEventsTimeout {
 
 
         tw.start();
+        Thread.sleep(10);
         tn.start();
 
         tw.join();

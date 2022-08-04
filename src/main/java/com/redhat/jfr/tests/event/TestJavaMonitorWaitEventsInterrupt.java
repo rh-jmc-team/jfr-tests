@@ -77,6 +77,7 @@ public class TestJavaMonitorWaitEventsInterrupt {
 
 
         interruptedThread.start();
+        Thread.sleep(50); //pause to ensure expected ordering of lock acquisition
         interrupterThread.start();
 
         interruptedThread.join();
@@ -87,6 +88,7 @@ public class TestJavaMonitorWaitEventsInterrupt {
 
 
         tw.start();
+        Thread.sleep(50);
         tn.start();
 
         tw.join();
@@ -100,9 +102,9 @@ public class TestJavaMonitorWaitEventsInterrupt {
         }
 
         public synchronized void interrupt() throws InterruptedException {
-            notify();
+//            notify();
             interrupted.interrupt();
-            System.out.println("first");
+            System.out.println("notify and interrupt");
             System.out.println(Thread.currentThread().getName());
         }
 
@@ -112,7 +114,7 @@ public class TestJavaMonitorWaitEventsInterrupt {
         public synchronized void simpleNotify() throws InterruptedException {
             Thread.sleep(100);
             notify();
-            System.out.println("second");
+            System.out.println("simple notify");
             System.out.println(Thread.currentThread().getName());
         }
     }

@@ -75,6 +75,7 @@ public class TestJavaMonitorWaitEvents {
                 while (count >= bufferSize) {
                     wait();
                 }
+                System.out.println("producing"+ Thread.currentThread().getName());
                 Thread.sleep(MILLIS);
                 count++;
                 notify();
@@ -86,6 +87,7 @@ public class TestJavaMonitorWaitEvents {
                 while (count == 0) {
                     wait();
                 }
+                System.out.println("consuming"+ Thread.currentThread().getName());
                 Thread.sleep(MILLIS);
                 count--;
                 notify();
