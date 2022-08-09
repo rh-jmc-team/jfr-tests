@@ -8,6 +8,7 @@ import javax.management.openmbean.*;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
+import javax.rmi.ssl.SslRMIClientSocketFactory;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -66,9 +67,10 @@ public class JfrTesterInvoke {
     public static MBeanServerConnection getLocalMBeanServerConnectionStatic() {
         try {
             JMXServiceURL jmxUrl =  new JMXServiceURL("service:jmx:rmi:///jndi/rmi://" + "localhost" + ":" + "9999" +  "/jmxrmi");
-            Map<String, String[]> env = new HashMap<>();
+            Map<String, Object> env = new HashMap<>();
             String[] credentials = {"myrole", "MYP@SSWORD"};
             env.put(JMXConnector.CREDENTIALS, credentials);
+            env.put("com.sun.jndi.rmi.factory.socket", new SslRMIClientSocketFactory()); //must be included if protecting registry with ssl.
             return JMXConnectorFactory.connect(jmxUrl, env).getMBeanServerConnection();
         } catch (IOException e) {
             throw new RuntimeException(e.toString());

@@ -51,13 +51,13 @@ public class Basic {
 //            JMXConnectorServer cs = JMXConnectorServerFactory.newJMXConnectorServer(url, null, server);
 //            cs.start();
 
-            FlightRecorderMXBean flightRecorderMXBean = ManagementFactory.getPlatformMXBean(FlightRecorderMXBean.class);
+//            FlightRecorderMXBean flightRecorderMXBean = ManagementFactory.getPlatformMXBean(FlightRecorderMXBean.class);
 
 //            server.invoke(objectName,"newRecording", null, null);
 //            System.out.println(server.invoke(objectName,"getVmVersion", null, null));
-            long rec = flightRecorderMXBean.newRecording();
-            flightRecorderMXBean.startRecording(rec);
-            flightRecorderMXBean.stopRecording(rec);
+//            long rec = flightRecorderMXBean.newRecording();
+//            flightRecorderMXBean.startRecording(rec);
+//            flightRecorderMXBean.stopRecording(rec);
         } catch (Exception e) {
             // handle exceptions
             System.out.println("Exception happened"+ e.toString());
@@ -78,19 +78,6 @@ public class Basic {
             event.commit();
         }
 
-    }
-
-    public static MBeanServerConnection getLocalMBeanServerConnectionStatic(String s) {
-        try {
-            //for manual set up of server
-//            JMXServiceURL jmxUrl =  new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:9999/server");
-            //when using automatic server setup, a generated urlPath is appended
-//            JMXServiceURL jmxUrl =  new JMXServiceURL("service:jmx:rmi://127.0.0.1/stub/rO0ABXN9AAAAAQAlamF2YXgubWFuYWdlbWVudC5yZW1vdGUucm1pLlJNSVNlcnZlcnhyABdqYXZhLmxhbmcucmVmbGVjdC5Qcm94eXZ6B7UDOXsxAgAAeHA=");
-            JMXServiceURL jmxUrl =  new JMXServiceURL(s);
-            return JMXConnectorFactory.connect(jmxUrl).getMBeanServerConnection();
-        } catch (IOException e) {
-            throw new RuntimeException(e.toString());
-        }
     }
 
 }
