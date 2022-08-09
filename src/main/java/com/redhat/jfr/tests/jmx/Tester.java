@@ -29,13 +29,13 @@ public class Tester {
 
     }
 
-    public static MBeanServerConnection getLocalMBeanServerConnectionStatic(String[] s) {
+    public static MBeanServerConnection getLocalMBeanServerConnectionStatic(String[] s ) {
         try {
             JMXServiceURL jmxUrl =  new JMXServiceURL("service:jmx:rmi:///jndi/rmi://" + "localhost" + ":" + s[0] +  "/jmxrmi");
             Map<String, Object> env = new HashMap<>();
             String[] credentials = {"myrole", "MYP@SSWORD"};
             env.put(JMXConnector.CREDENTIALS, credentials);
-            env.put("com.sun.jndi.rmi.factory.socket", new SslRMIClientSocketFactory()); //must be included if protecting registry with ssl.
+//            env.put("com.sun.jndi.rmi.factory.socket", new SslRMIClientSocketFactory()); //must be included if protecting registry with ssl.
             return JMXConnectorFactory.connect(jmxUrl, env).getMBeanServerConnection();
         } catch (IOException e) {
             e.printStackTrace();
