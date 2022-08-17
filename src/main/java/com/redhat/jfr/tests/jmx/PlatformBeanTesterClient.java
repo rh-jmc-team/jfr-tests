@@ -23,6 +23,7 @@ package com.redhat.jfr.tests.jmx;
 
 import javax.management.MBeanServerConnection;
 import java.lang.management.*;
+import java.util.List;
 
 /**
  * This is a JMX client that tests several platform MXBeans.
@@ -60,7 +61,11 @@ public class PlatformBeanTesterClient {
         System.out.println("Memory usage: " + memoryUsage.getUsed());
         System.out.println("Max memory usage: " + memoryUsage.getMax());
 
-
-        //TODO: add GarbageCollectorMXbean too
+        System.out.println("----GarbageCollectorMXBean----");
+        List<GarbageCollectorMXBean> garbageCollectorMXBeans = ManagementFactory.getPlatformMXBeans(mbsc, GarbageCollectorMXBean.class);
+        for (GarbageCollectorMXBean gcBean : garbageCollectorMXBeans) {
+            System.out.println("Object name: "+ gcBean.getObjectName());
+            System.out.println("Collection count: " + gcBean.getCollectionCount());
+        }
     }
 }
