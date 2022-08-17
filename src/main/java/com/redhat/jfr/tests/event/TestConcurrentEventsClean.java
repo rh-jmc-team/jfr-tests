@@ -55,5 +55,6 @@ public class TestConcurrentEventsClean {
         };
         Thread.UncaughtExceptionHandler eh = (t, e) -> e.printStackTrace();
         Stressor.execute(threadCount, eh, r);
+        while(true);
     }
 }

@@ -28,7 +28,8 @@ import com.redhat.jfr.utils.Stressor;
 /*
 * The result of this test should be THREADS threads acquiring the lock one by one.
 * The wait times should be cumulative.
-* So the first thread should acquire the lock immediately, the second thread after MILLIS time and the third thread after 2*MILLIS time.*/
+* So the first thread should acquire the lock immediately, the second thread after MILLIS time and the third thread after 2*MILLIS time.
+*/
 public class JfrTestServer {
     private static final int THREADS = 10;
     private static final int MILLIS = 60;
