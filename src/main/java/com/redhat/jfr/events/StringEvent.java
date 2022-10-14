@@ -21,14 +21,11 @@
 
 package com.redhat.jfr.events;
 
-import jdk.jfr.Description;
-import jdk.jfr.Event;
-import jdk.jfr.Label;
-import jdk.jfr.StackTrace;
-
+import jdk.jfr.*;
+@Name("com.redhat.String")
 @Label("String Event")
 @Description("An event with a string payload")
-@StackTrace(false)
+@StackTrace(true)
 public class StringEvent extends Event {
 
     @Label("Message")
