@@ -36,7 +36,6 @@ public class Tester {
         long recording = flightRecorderMXBean.newRecording();
         System.out.println("Starting recording");
         flightRecorderMXBean.startRecording(recording);
-        Thread.sleep(1000);
         flightRecorderMXBean.stopRecording(recording);
     }
 

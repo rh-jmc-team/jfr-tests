@@ -22,7 +22,7 @@
 package com.redhat.jfr.tests.jmx;
 import javax.management.*;
 import java.lang.management.ManagementFactory;
-import com.redhat.jfr.events.StringEvent;
+import java.util.concurrent.locks.LockSupport;
 
 /**
  * This is a basic test meant to run as a JMX server. It creates the lazily initialized MBeanServer
@@ -30,7 +30,6 @@ import com.redhat.jfr.events.StringEvent;
  */
 public class Basic {
     public static void main(String args[]) throws Exception {
-
         try {
             ObjectName objectName = new ObjectName("com.jmx.test.basic:type=basic,name=game");
             MBeanServer server = ManagementFactory.getPlatformMBeanServer();
@@ -42,13 +41,9 @@ public class Basic {
         }
 
         while(true){
-            Thread.sleep(500);
-            StringEvent event = new StringEvent();
-            event.message = "Event has been generated!";
-            event.commit();
+            Thread.sleep(1000);
+            System.out.println("JMX server running...");
         }
-
     }
-
 }
 
