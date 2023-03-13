@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, Red Hat, Inc.
+ * Copyright (c) 2022, Red Hat, Inc.
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -19,15 +19,27 @@
  * along with the suite.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.redhat.jfr.events;
+package com.redhat.jfr.tests.jmx;
 
-import jdk.jfr.*;
-@Name("com.redhat.String")
-@Label("String Event")
-@Description("An event with a string payload")
-@StackTrace(true)
-public class StringEvent extends Event {
+public class Game implements GameMBean {
 
-    @Label("Message")
-    public String message;
+    private String playerName;
+
+    @Override
+    public void playFootball(String clubName) {
+        System.out.println(
+                this.playerName + " playing football for " + clubName);
+    }
+
+    @Override
+    public String getPlayerName() {
+        System.out.println("Return playerName " + this.playerName);
+        return playerName;
+    }
+
+    @Override
+    public void setPlayerName(String playerName) {
+        System.out.println("Set playerName to value " + playerName);
+        this.playerName = playerName;
+    }
 }

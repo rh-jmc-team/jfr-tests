@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, Red Hat, Inc.
+ * Copyright (c) 2022, Red Hat, Inc.
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -19,15 +19,22 @@
  * along with the suite.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+
+
+/*
+This is to test the thread sleep event emission by virtual threads. You need to compile with javac and use jre 19+.
+You'll need <compilerArgs>--enable-preview</compilerArgs> added to your pom.xml as well.
+This test is commented out so it doesn't affect the compilation of the other tests (which you don't need jdk 19+ for) when you build with mvn.
+To run you also need the --enable-preview flag included.
+ */
+
+/*
 package com.redhat.jfr.tests.event;
 
-import com.redhat.jfr.events.StringEvent;
-import com.redhat.jfr.events.IntegerEvent;
-import com.redhat.jfr.events.ClassEvent;
-import com.redhat.jfr.utils.Stressor;
 
-public class TestConcurrentEventsClean {
-    private static final int COUNT = 1024 * 1024;
+public class TestThreadSleepVirtual {
+    private static final int MILLIS = 50;
+
 
     public static void main(String args[]) throws Exception {
         long s0 = System.currentTimeMillis();
@@ -37,24 +44,21 @@ public class TestConcurrentEventsClean {
     }
 
     public static void run() throws Exception {
-        int threadCount = 8;
-        Runnable r = () -> {
-            for (int i = 0; i < COUNT; i++) {
-                StringEvent stringEvent = new StringEvent();
-                stringEvent.message = "StringEvent has been generated as part of TestConcurrentEvents.";
-                stringEvent.commit();
-
-                IntegerEvent integerEvent = new IntegerEvent();
-                integerEvent.number = Integer.MAX_VALUE;
-                integerEvent.commit();
-
-                ClassEvent classEvent = new ClassEvent();
-                classEvent.clazz = Math.class;
-                classEvent.commit();
+        var vThread = Thread.startVirtualThread(() -> {
+            for (int i = 0; i < 10; i++) {
+                try {
+                    Thread.sleep(MILLIS);
+                    System.out.println("Hello from the virtual thread");
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
-        };
-        Thread.UncaughtExceptionHandler eh = (t, e) -> e.printStackTrace();
-        Stressor.execute(threadCount, eh, r);
-        while(true);
+        });
+
+        vThread.join();
     }
+
+
 }
+
+ */
